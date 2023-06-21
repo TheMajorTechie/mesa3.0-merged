@@ -1,0 +1,20 @@
+
+!IF "$(STATIC_MESA)" == "1"
+!ERROR Static library build of 3Dfx demos not supported, sorry.
+!ENDIF
+
+EXELIBS     = GLUT32.LIB GLU32.LIB $(MESAROOT)\lib\FX\OPENGL32.LIB
+RUNTIMELIBS = GLUT32.DLL GLU32.DLL FX\OPENGL32.DLL
+
+!IF "$(DEBUG)" == "1"
+EXELIBS=$(EXELIBS:.lib=d.lib)
+!IF "$(RUNTIMELIBS)" != ""
+RUNTIMELIBS=$(RUNTIMELIBS:.dll=d.dll)
+!ENDIF
+!ENDIF
+
+SRCALT1     = .\$(MESADEMOROOT)\3dfx\demos
+EXELIBS     = $(EXELIBS) glide2x.lib winmm.lib
+CPPOPTS     = /DFX /DFX_SILENT $(CPPOPTS)
+SUPLIBSROOT = .\rules\progs.3dfx.demos
+SRCFILES    = fire.c glbpaltx.c gltest.c ipers.c mesaland.c paltex.c ray.c teapot.c tunnel.c tunnel2.c
